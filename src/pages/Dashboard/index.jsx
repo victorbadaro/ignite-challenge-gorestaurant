@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import api from '../../services/api';
 import Food from '../../components/Food';
-import ModalAddFood from '../../components/ModalAddFood';
+import { ModalAddFood } from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 
@@ -69,27 +69,26 @@ export function Dashboard() {
         <>
             <Header openModal={handleToggleOpenCloseModal} />
             <ModalAddFood
-            isOpen={isModalOpen}
-            setIsOpen={handleToggleOpenCloseModal}
-            handleAddFood={handleAddFood}
+              isOpen={isModalOpen}
+              setIsOpen={handleToggleOpenCloseModal}
+              handleAddFood={handleAddFood}
             />
             <ModalEditFood
-            isOpen={isEditModalOpen}
-            setIsOpen={handleToggleEditModal}
-            editingFood={editingFood}
-            handleUpdateFood={handleUpdateFood}
+              isOpen={isEditModalOpen}
+              setIsOpen={handleToggleEditModal}
+              editingFood={editingFood}
+              handleUpdateFood={handleUpdateFood}
             />
 
             <FoodsContainer data-testid="foods-list">
-            {foods &&
-                foods.map(food => (
+              {foods && foods.map(food => (
                 <Food
                     key={food.id}
                     food={food}
                     handleDelete={handleDeleteFood}
                     handleEditFood={handleEditFood}
                 />
-                ))}
+              ))}
             </FoodsContainer>
         </>
     );
