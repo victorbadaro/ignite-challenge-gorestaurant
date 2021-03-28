@@ -1,11 +1,8 @@
-// import { useState } from 'react';
 import ReactModal from 'react-modal';
 
 ReactModal.setAppElement('#root');
 
 export function Modal({ isOpen, setIsOpen, children }) {
-    // const [isModalOpen, setIsModalOpen] = useState(isOpen);
-
     return (
         <ReactModal
             shouldCloseOnOverlayClick={!false}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Header } from '../../components/Header';
 import api from '../../services/api';
-import Food from '../../components/Food';
+import { Food } from '../../components/Food';
 import { ModalAddFood } from '../../components/ModalAddFood';
 import { ModalEditFood } from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
@@ -26,7 +26,7 @@ export function Dashboard() {
     async function handleAddFood(food) {
         try {
             const response = await api.post('/foods', { ...food, available: true });
-
+            
             setFoods([ ...foods, response.data ]);
         } catch (error) {
             console.log(error);
@@ -47,8 +47,8 @@ export function Dashboard() {
 
     async function handleDeleteFood(id) {
         await api.delete(`/foods/${id}`);
-        const filteredFoods = foods.map(food => food.id !== id);
-
+        const filteredFoods = foods.filter(food => food.id !== id);
+        
         setFoods(filteredFoods);
     }
 
