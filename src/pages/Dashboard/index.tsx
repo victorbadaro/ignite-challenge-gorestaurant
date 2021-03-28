@@ -7,9 +7,20 @@ import { ModalAddFood } from '../../components/ModalAddFood';
 import { ModalEditFood } from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 
+interface FoodProps {
+    id: number;
+    name: string;
+    description: string;
+    price: string;
+    available: boolean;
+    image: string;
+}
+
+type FoodInput = Omit<FoodProps, 'id'|'available'>;
+
 export function Dashboard() {
-    const [foods, setFoods] = useState([]);
-    const [editingFood, setEditingFood] = useState({});
+    const [foods, setFoods] = useState<FoodProps[]>([]);
+    const [editingFood, setEditingFood] = useState<FoodProps>({} as FoodProps);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -23,7 +34,7 @@ export function Dashboard() {
         getFoods();
     }, []);
 
-    async function handleAddFood(food) {
+    async function handleAddFood(food: FoodInput) {
         try {
             const response = await api.post('/foods', { ...food, available: true });
             
@@ -33,7 +44,7 @@ export function Dashboard() {
         }
     }
 
-    async function handleUpdateFood(food) {
+    async function handleUpdateFood(food: FoodInput) {
         try {
             const response = await api.put(`/foods/${editingFood.id}`, { ...editingFood, ...food });
             const updatedFood = response.data;
@@ -45,7 +56,7 @@ export function Dashboard() {
         }
     }
 
-    async function handleDeleteFood(id) {
+    async function handleDeleteFood(id: number) {
         await api.delete(`/foods/${id}`);
         const filteredFoods = foods.filter(food => food.id !== id);
         
@@ -60,7 +71,7 @@ export function Dashboard() {
         setIsEditModalOpen(!isEditModalOpen);
     }
 
-    function handleEditFood(food) {
+    function handleEditFood(food: FoodProps) {
         setEditingFood(food);
         setIsEditModalOpen(true);
     }
